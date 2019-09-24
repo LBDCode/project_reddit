@@ -35,7 +35,7 @@ $(document).ready(function() {
 
         const addComment = (postID, id, author, content) => {
             let postIndex = posts.findIndex((obj => obj.id == postID));
-            let newComment = {postID: postID, id: id, author: author, content: content}
+            let newComment = new Comment(postID, id, author, content);
             posts[postIndex].comments.push(newComment);
             console.log(posts[postIndex].comments);
             displayPosts();
