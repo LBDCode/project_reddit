@@ -1,6 +1,5 @@
 $(document).ready(function() {
 
-    $('.comment-form').hide();
 
     function Post(id, title, author, content) {
         this.id = id;
@@ -30,17 +29,28 @@ $(document).ready(function() {
 
         const deletePost = (postID) => {
             let postIndex = posts.findIndex((obj => obj.id == postID));
-            console.log(postIndex);
             posts.splice(postIndex, 1);
             displayPosts();
         };
 
         const addComment = (postID, id, author, content) => {
             let postIndex = posts.findIndex((obj => obj.id == postID));
-            let newComment = {id: id, author: author, content: content}
+            let newComment = {postID: postID, id: id, author: author, content: content}
             posts[postIndex].comments.push(newComment);
-            console.log(posts[postIndex].comments)
+            console.log(posts[postIndex].comments);
+            displayPosts();
         };
+
+        const deleteComment = (postID, commentID) => {
+            let postIndex = posts.findIndex((obj => obj.id == postID));
+            let commentIndex = posts[postIndex].comments.findIndex(com => com.id == commentID);
+            let p = posts[postIndex];
+            console.log(p.comments);
+            console.log(`delete ${postID} comment ${commentID}`);
+            p.comments.splice(commentIndex, 1);
+            console.log(posts[postIndex]);
+            displayPosts();
+        }
 
         const generateID = () => {
             return Math.random().toString(36).replace('0.', '') 
@@ -55,7 +65,7 @@ $(document).ready(function() {
                 let commentsDiv = `<p>`
 
                 post.comments.map(comment => {
-                    commentsDiv+= `<p>${comment.author}: ${comment.content}</p>
+                    commentsDiv+= `<p><span class='commentDelete' data-postID= ${comment.postID} id=${comment.id}>x</span>${comment.author}: ${comment.content}</p>
                      `
                 });
 
@@ -64,25 +74,31 @@ $(document).ready(function() {
                         <p class="title">
                             <a class="title-link">${post.title}</a>
                         </p>
-                        <p>${post.author}</p>
+                        <p>posted by: ${post.author}</p>
                         <p>${post.content}</p>            
-                        <p>${post.id}</p>
+                        <p><strong>Comments:</strong></p>
                     `;
                 newPost += commentsDiv;
                 newPost += '</p>';
                 newPost += `    
                         <button data-id=${post.id} class="btn btn-dark addComment">Add Comment</button>
-                        <button data-id=${post.id} class="btn btn-dark removePostButton">Remove Post</button>
+                        <button data-id=${post.id} class="btn btn-light removePostButton">Remove Post</button>
                     </div>
                 </div>`;
                 $('.post-content').append(newPost);
-            })
+            });
+
         };
 
         const resetPostDiv = () => {
             $("#postTitle").val('');
             $("#postUser").val('');
             $("#postText").val('');
+        };
+
+        const resetCommentDiv = () => {
+            $("#commentUser").val('');
+            $("#commentText").val('');
         };
         
         return {
@@ -92,7 +108,9 @@ $(document).ready(function() {
             generateID: generateID,
             addComment: addComment,
             displayPosts: displayPosts,
-            deletePost: deletePost
+            deletePost: deletePost,
+            resetCommentDiv: resetCommentDiv,
+            deleteComment: deleteComment
         }
     };
 
@@ -105,10 +123,14 @@ $(document).ready(function() {
         let postContent = $("#postText").val();
         app.addPost(postID, postTitle, postAuthor, postContent);
         app.resetPostDiv();
+        $('.postAction').hide();
     });
 
     $('.post-content').on('click', function(event){
         if ($(event.target).hasClass('addComment')) {
+            $('.comment-form').show();
+            $('.postAction').show();
+            $('.post-form').hide();    
             const postID = $(event.target).attr('data-id');
             $('#saveCommentButton').attr('data-id', postID);
             $('.post-form').hide()
@@ -116,6 +138,10 @@ $(document).ready(function() {
         } else if ($(event.target).hasClass('removePostButton')) {
             const postID = $(event.target).attr('data-id');
             app.deletePost(postID);
+        } else if ($(event.target).hasClass('commentDelete')) {
+            const postID = $(event.target).attr('data-postID');
+            const commentID = $(event.target).attr('id');
+            app.deleteComment(postID, commentID);
         }
     });
 
@@ -124,10 +150,16 @@ $(document).ready(function() {
         let commentID = app.generateID();
         let commentAuthor = $("#commentUser").val();
         let commentContent = $("#commentText").val();
-        console.log(postID);
         app.addComment(postID, commentID, commentAuthor, commentContent);
         app.displayPosts();
+        app.resetCommentDiv();
     });
+
+    $('.addPostBtn').on('click', function(event){
+        $('.comment-form').hide();
+        $('.postAction').show();
+        $('.post-form').show();
+    })
 
 
     

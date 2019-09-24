@@ -50,11 +50,9 @@
     <div class="container postAction" id="postDiv" tabindex="-1" role="dialog">
         <div class="post-form" role="document">
             <div class="post-div">
+                <h2>Add a Post</h2>
                 <div class="post-header">
-                    <h5 class="" id="post-title"></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h5 class="postTitle" id="post-title"></h5>
                 </div>
                 <div class="post-body">
                     <div class="form-group">
@@ -62,35 +60,36 @@
                         <textarea class="form-control" id="postTitle" rows="1"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="postText">Post Content:</label>
-                        <textarea class="form-control" id="postText" rows="3"></textarea>
-                    </div>
-                    <div class="form-group">
                         <label for="postUser">User:</label>
                         <textarea class="form-control" id="postUser" rows="1"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="postText">Post Content:</label>
+                        <textarea class="form-control" id="postText" rows="3"></textarea>
                     </div>
                 </div>
                 <div class="post-footer">
                     <button type="button" class="btn btn-dark" id="savePostButton">Save post</button>
-                    <button type="button" class="btn btn-light" id="delete-post-text">Delete post</button>
+                    <button type="button" class="btn btn-light" id="clearPostButton">Clear post form</button>
                 </div>
             </div>
         </div>
         <div class="comment-form" role="document">
             <div class="comment-div">
+                <h2>Add a Comment</h2>
                 <div class="comment-body">
-                    <div class="form-group">
-                        <label for="commentText">Comment:</label>
-                        <textarea class="form-control" id="commentText" rows="3"></textarea>
-                    </div>
                     <div class="form-group">
                         <label for="commentUser">User:</label>
                         <textarea class="form-control" id="commentUser" rows="1"></textarea>
                     </div>
+                    <div class="form-group">
+                        <label for="commentText">Comment:</label>
+                        <textarea class="form-control" id="commentText" rows="3"></textarea>
+                    </div>
                 </div>
                 <div class="comment-footer">
                     <button type="button" class="btn btn-dark" id="saveCommentButton">Save comment</button>
-                    <button type="button" class="btn btn-light" id="deleteCommentButton">Delete comment</button>
+                    <button type="button" class="btn btn-light" id="clearCommentButton">Clear comment form</button>
                 </div>
             </div>
         </div>
