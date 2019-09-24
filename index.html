@@ -47,7 +47,7 @@
 
     </div>
 
-    <div class="container post" id="postDiv" tabindex="-1" role="dialog">
+    <div class="container postAction" id="postDiv" tabindex="-1" role="dialog">
         <div class="post-form" role="document">
             <div class="post-div">
                 <div class="post-header">
@@ -76,17 +76,8 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="container comment" id="commentDiv" tabindex="-1" role="dialog">
         <div class="comment-form" role="document">
             <div class="comment-div">
-                <div class="comment-header">
-                    <h5 class="" id="comment-title"></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
                 <div class="comment-body">
                     <div class="form-group">
                         <label for="commentText">Comment:</label>
@@ -98,12 +89,13 @@
                     </div>
                 </div>
                 <div class="comment-footer">
-                    <button type="button" class="btn btn-dark" id="saveComment">Save comment</button>
-                    <button type="button" class="btn btn-light" id="deleteComment">Delete comment</button>
+                    <button type="button" class="btn btn-dark" id="saveCommentButton">Save comment</button>
+                    <button type="button" class="btn btn-light" id="deleteCommentButton">Delete comment</button>
                 </div>
             </div>
         </div>
     </div>
+
 
 </body>
 <script src="app.js"></script>

@@ -66,6 +66,14 @@ p {
     border: 1px solid #818384;
 }
 
+.postAction {
+    margin-top: 15px;
+    background-color: #1A1A1B; 
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: 1px solid #818384;
+}
+
 #comment-title {
     color: #1A1A1B;
 }
