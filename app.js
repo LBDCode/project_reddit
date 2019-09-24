@@ -28,6 +28,13 @@ $(document).ready(function() {
             displayPosts();
         };
 
+        const deletePost = (postID) => {
+            let postIndex = posts.findIndex((obj => obj.id == postID));
+            console.log(postIndex);
+            posts.splice(postIndex, 1);
+            displayPosts();
+        };
+
         const addComment = (postID, id, author, content) => {
             let postIndex = posts.findIndex((obj => obj.id == postID));
             let newComment = {id: id, author: author, content: content}
@@ -39,17 +46,6 @@ $(document).ready(function() {
             return Math.random().toString(36).replace('0.', '') 
         };
 
-        // const mapComments = function (post) {
-        //     let newCommentDiv = $('p');
-        //     post.comments.map(comment => {
-        //         let commentContent = `
-        //             <p>${comment.author}</p>
-        //             <p>${comment.content}</p>
-        //             `;
-        //         $(newCommentDiv).append(commentContent);
-        //     });
-        //     return newCommentDiv;
-        // };
 
         const displayPosts = () => {
             console.log("displaying posts");
@@ -57,10 +53,12 @@ $(document).ready(function() {
             
             posts.map(post => {
                 let commentsDiv = `<p>`
+
                 post.comments.map(comment => {
                     commentsDiv+= `<p>${comment.author}: ${comment.content}</p>
                      `
                 });
+
                 let newPost =  `<div class="media post" id=${post.id} data-id=${post.id}>
                     <div class="media-body">
                         <p class="title">
@@ -74,6 +72,7 @@ $(document).ready(function() {
                 newPost += '</p>';
                 newPost += `    
                         <button data-id=${post.id} class="btn btn-dark addComment">Add Comment</button>
+                        <button data-id=${post.id} class="btn btn-dark removePostButton">Remove Post</button>
                     </div>
                 </div>`;
                 $('.post-content').append(newPost);
@@ -92,7 +91,8 @@ $(document).ready(function() {
             resetPostDiv: resetPostDiv,
             generateID: generateID,
             addComment: addComment,
-            displayPosts: displayPosts
+            displayPosts: displayPosts,
+            deletePost: deletePost
         }
     };
 
@@ -113,6 +113,9 @@ $(document).ready(function() {
             $('#saveCommentButton').attr('data-id', postID);
             $('.post-form').hide()
             $('.comment-form').show();
+        } else if ($(event.target).hasClass('removePostButton')) {
+            const postID = $(event.target).attr('data-id');
+            app.deletePost(postID);
         }
     });
 
