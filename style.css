@@ -44,6 +44,10 @@ p {
     overflow: hidden;
 }
 
+.showAllPostsBtn {
+    display: none;
+}
+
 .welcome-content {
     margin-top: 20px;
     color: red;
@@ -51,11 +55,6 @@ p {
 
 .custom-lead {
     margin-bottom: 20px;
-}
-
-.title-link {
-    font-size: 1.2rem;
-    color: #dfe1e3;
 }
 
 .post {

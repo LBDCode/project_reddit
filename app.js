@@ -78,8 +78,7 @@ $(document).ready(function() {
                 // build post div for each post in posts array
                 let newPost =  `<div class="media post" id=${post.id} data-id=${post.id}>
                     <div class="media-body">
-                        <p class="title">
-                            <a class="title-link">${post.title}</a>
+                        <p class="title">${post.title}
                         </p>
                         <p>posted by: ${post.author}</p>
                         <p>${post.content}</p>            
@@ -111,6 +110,16 @@ $(document).ready(function() {
             $("#commentUser").val('');
             $("#commentText").val('');
         };
+
+        const showOnePost = (postID) => {
+            $('.media').not('#' + postID).hide();
+            $('.showAllPostsBtn').show();
+        };
+
+        const showAllPosts = (postID) => {
+            $('.media').show();
+            $('.showAllPostsBtn').hide();
+        };
         
         return {
             posts: posts,
@@ -121,7 +130,9 @@ $(document).ready(function() {
             displayPosts: displayPosts,
             deletePost: deletePost,
             resetCommentDiv: resetCommentDiv,
-            deleteComment: deleteComment
+            deleteComment: deleteComment,
+            showOnePost: showOnePost,
+            showAllPosts: showAllPosts
         }
     };
 
@@ -161,10 +172,14 @@ $(document).ready(function() {
         } else if ($(event.target).hasClass('removePostButton')) {
             const postID = $(event.target).attr('data-id');
             app.deletePost(postID);
+            app.showAllPosts();
         } else if ($(event.target).hasClass('commentDelete')) {
             const postID = $(event.target).attr('data-postID');
             const commentID = $(event.target).attr('id');
             app.deleteComment(postID, commentID);
+        } else if ($(event.target).hasClass('media-body') || $(event.target).hasClass('title')) {
+            const postID = $(event.target).closest('.post').attr('id');
+            app.showOnePost(postID);
         }
     });
 
@@ -179,7 +194,10 @@ $(document).ready(function() {
         app.resetCommentDiv();
         $('.comment-form').hide();
         $('.postAction').hide();
+    });
 
+    $('.showAllPostsBtn').on('click', function(event){
+        app.showAllPosts();
     });
 
 
@@ -189,7 +207,8 @@ $(document).ready(function() {
 // users can create (form with title, content, user) and delete posts 
 // users comment on posts (form with content and user), and delete comments
 // additional functionality (not done yet):
-// hide all posts but the one clicked
+// hide all posts but the one clicked - this is semi-working, need to go back 
+// and refactor hide/show to reduce redundancy/duplication
 // validate form inputs
 // change pointer on mouseover of delete x
 // 
